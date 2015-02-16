@@ -1,0 +1,328 @@
+datagrid:
+    stc_band_grid:
+        extended_entity_name: %stc_band.entity.class%
+        source:
+            type: orm
+            query:
+                select:
+                    - band.id
+                    - band.name
+                    - band.description
+                    - band.email
+                    - band.billingAddressStreet
+                    - band.billingAddressCity
+                    - band.billingAddressState
+                    - band.billingAddressPostalcode
+                    - band.phoneOffice
+                    - CONCAT(relatedContact.firstName, CONCAT(' ', relatedContact.lastName)) as relatedContactName
+                    - band.website
+                    - band.genre
+                    - band.actType
+                    - band.tributeto
+                    - band.twitter
+                    - band.facebook
+                    - band.youtube
+                    - band.vimeo
+                    - band.myspace
+                    - band.reverbnation
+                    - band.linkdin
+                    - band.googleplus
+                    - band.jjwgMapsLatC
+                    - band.jjwgMapsLngC
+                    - band.createdAt
+                    - band.updatedAt
+                from:
+                    - { table: StcAppBundle:Band , alias: band }
+                join:
+                    left:
+                        - { join: band.relatedContact, alias: relatedContact }
+        options:
+            skip_acl_check: true
+        columns:
+            name:
+                label: stc.band.name.label
+            billingAddressStreet:
+                label: stc.band.billingAddressStreet.label
+                frontend_type: string
+            billingAddressCity:
+                label: stc.band.billingAddressCity.label
+                frontend_type: string
+            billingAddressState:
+                label: stc.band.billingAddressState.label
+                frontend_type: string
+            billingAddressPostalcode:
+                label: stc.band.billingAddressPostalcode.label
+                frontend_type: string
+            email:
+                label: stc.band.email.label
+                frontend_type: string
+            phoneOffice:
+                label: stc.band.phoneOffice.label
+                frontend_type: string
+            relatedContactName:
+                label: Related Contact
+                frontend_type: string
+            website:
+                label: stc.band.website.label
+                frontend_type: string
+            genre:
+                label: stc.band.genre.label
+                frontend_type: string
+            actType:
+                label: stc.band.actType.label
+                frontend_type: string
+            tributeto:
+                label: stc.band.tributeto.label
+                frontend_type: string
+            twitter:
+                label: stc.band.twitter.label
+                frontend_type: string
+            facebook:
+                label: stc.band.facebook.label
+                frontend_type: string
+            youtube:
+                label: stc.band.youtube.label
+                frontend_type: string
+            vimeo:
+                label: stc.band.vimeo.label
+                frontend_type: string
+            myspace:
+                label: stc.band.myspace.label
+                frontend_type: string
+            googleplus:
+                label: stc.band.googleplus.label
+                frontend_type: string
+            reverbnation:
+                label: stc.band.reverbnation.label
+                frontend_type: string
+            linkdin:
+                label: stc.band.linkdin.label
+                frontend_type: string
+            jjwgMapsLatC:
+                label: stc.band.jjwg_maps_lat_c.label
+                frontend_type: string
+            jjwgMapsLngC:
+                label: stc.band.jjwg_maps_lng_c.label
+                frontend_type: string
+            createdAt:
+                label: stc.band.created_at.label
+                frontend_type: datetime
+            updatedAt:
+                label: stc.band.updated_at.label
+                frontend_type: datetime
+        properties:
+            id: ~
+            view_link:
+                type: url
+                route: stc_band_view
+                params: [ id ]
+            update_link:
+                type: url
+                route: stc_band_update
+                params: [ id ]
+#            delete_link:
+#                type: url
+#                route: stc_api_delete_band
+#                params: [ id ]
+        sorters:
+            columns:
+                name:              { data_name: band.name }
+                createdAt:         { data_name: band.createdAt }
+                updatedAt:         { data_name: band.updatedAt }
+                website:           { data_name: band.website }
+            default:
+                createdAt: DESC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: band.name
+                genre:
+                    type: string
+                    data_name: band.genre
+                website:
+                    type: string
+                    data_name: band.website
+                createdAt:
+                    type: datetime
+                    data_name: band.createdAt
+                updatedAt:
+                    type: datetime
+                    data_name: band.updatedAt
+        actions:
+            view:
+                type: navigate
+                acl_resource: stc_band_view
+                label: View Details
+                icon: eye-open
+                link: view_link
+                rowAction: true
+            update:
+                type: navigate
+                acl_resource: stc_band_update
+                label: Update Band
+                icon: edit
+                link: update_link
+#            delete:
+#                type: delete
+#                label: Delete Band
+#                link: delete_link
+#                icon: trash
+#                acl_resource: stc_api_delete_band
+
+    stc_venue_grid:
+        extended_entity_name: %stc_venue.entity.class%
+        source:
+            type: orm
+            query:
+                select:
+                    - venue.id
+                    - venue.name
+                    - venue.description
+                    - venue.email
+                    - venue.billingAddressStreet
+                    - venue.billingAddressCity
+                    - venue.billingAddressState
+                    - venue.billingAddressPostalcode
+                    - venue.country
+                    - venue.phoneOffice
+                    - venue.phoneFax
+                    - CONCAT(relatedContact.firstName, CONCAT(' ', relatedContact.lastName)) as relatedContactName
+                    - venue.website
+                    - venue.venueType
+                    - venue.capacity
+                    - venue.ageLimit
+                    - venue.avgTicketPrice
+                    - venue.annualRevenue
+                    - venue.industry
+                    - venue.facebook
+                    - venue.twitter
+                    - venue.tickerSymbol
+                    - venue.employees
+                    - venue.jjwgMapsLatC
+                    - venue.jjwgMapsLngC
+                    - venue.createdAt
+                    - venue.updatedAt
+                from:
+                    - { table: StcAppBundle:Venue , alias: venue }
+                join:
+                    left:
+                        - { join: venue.relatedContact, alias: relatedContact }
+        options:
+            skip_acl_check: true
+        columns:
+            name:
+                label: stc.venue.name.label
+            billingAddressStreet:
+                label: stc.venue.billingAddressStreet.label
+                frontend_type: string
+            billingAddressCity:
+                label: stc.venue.billingAddressCity.label
+                frontend_type: string
+            billingAddressState:
+                label: stc.venue.billingAddressState.label
+                frontend_type: string
+            billingAddressPostalcode:
+                label: stc.venue.billingAddressPostalcode.label
+                frontend_type: string
+            email:
+                label: stc.venue.email.label
+                frontend_type: string
+            phoneOffice:
+                label: stc.venue.phoneOffice.label
+                frontend_type: string
+            relatedContactName:
+                label: Related Contact
+                frontend_type: string
+            website:
+                label: stc.venue.website.label
+                frontend_type: string
+            tickerSymbol:
+                label: stc.venue.tickerSymbol.label
+                frontend_type: string
+            venueType:
+                label: stc.venue.venueType.label
+                frontend_type: string
+            capacity:
+                label: stc.venue.capacity.label
+                frontend_type: string
+            twitter:
+                label: stc.venue.twitter.label
+                frontend_type: string
+            facebook:
+                label: stc.venue.facebook.label
+                frontend_type: string
+            ageLimit:
+                label: stc.venue.ageLimit.label
+                frontend_type: string
+            avgTicketPrice:
+                label: stc.venue.avgTicketPrice.label
+                frontend_type: string
+            jjwgMapsLatC:
+                label: stc.venue.jjwg_maps_lat_c.label
+                frontend_type: string
+            jjwgMapsLngC:
+                label: stc.venue.jjwg_maps_lng_c.label
+                frontend_type: string
+            createdAt:
+                label: stc.venue.created_at.label
+                frontend_type: datetime
+            updatedAt:
+                label: stc.venue.updated_at.label
+                frontend_type: datetime
+        properties:
+            id: ~
+            view_link:
+                type: url
+                route: stc_venue_view
+                params: [ id ]
+            update_link:
+                type: url
+                route: stc_venue_update
+                params: [ id ]
+#            delete_link:
+#                type: url
+#                route: stc_api_delete_venue
+#                params: [ id ]
+        sorters:
+            columns:
+                name:              { data_name: venue.name }
+                createdAt:         { data_name: venue.createdAt }
+                updatedAt:         { data_name: venue.updatedAt }
+                website:           { data_name: venue.website }
+            default:
+                createdAt: DESC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: venue.name
+                website:
+                    type: string
+                    data_name: venue.website
+                createdAt:
+                    type: datetime
+                    data_name: venue.createdAt
+                updatedAt:
+                    type: datetime
+                    data_name: venue.updatedAt
+        actions:
+            view:
+                type: navigate
+                acl_resource: stc_venue_view
+                label: View Details
+                icon: eye-open
+                link: view_link
+                rowAction: true
+            update:
+                type: navigate
+                acl_resource: stc_venue_update
+                label: Update Venue
+                icon: edit
+                link: update_link
+#            delete:
+#                type: delete
+#                label: Delete Venue
+#                link: delete_link
+#                icon: trash
+#                acl_resource: stc_api_delete_venue

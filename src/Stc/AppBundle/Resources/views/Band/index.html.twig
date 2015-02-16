@@ -1,0 +1,12 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+{% set pageTitle = 'stc.band.entity_plural_label'|trans %}
+{% set gridName = 'stc_band_grid' %}
+{% block navButtons %}
+    {% if resource_granted('stc_band_create') %}
+        {{ UI.addButton({
+            'path' : path('stc_band_create'),
+            'entity_label': 'stc.band.entity.label'|trans
+        }) }}
+    {% endif %}
+{% endblock %}

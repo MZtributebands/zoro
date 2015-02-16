@@ -1,0 +1,55 @@
+stc_band_view:
+    type: entity
+    class: StcAppBundle:Band
+    permission: VIEW
+    group_name: ""
+    bindings: ~
+
+stc_band_create:
+    type: entity
+    class: StcAppBundle:Band
+    permission: CREATE
+    group_name: ""
+    bindings: ~
+
+stc_band_update:
+    type: entity
+    class: StcAppBundle:Band
+    permission: EDIT
+    group_name: ""
+    bindings: ~
+
+stc_band_delete:
+    type: entity
+    class: StcAppBundle:Band
+    permission: DELETE
+    group_name: ""
+    bindings: ~
+
+stc_venue_view:
+    type: entity
+    class: StcAppBundle:Venue
+    permission: VIEW
+    group_name: ""
+    bindings: ~
+
+stc_venue_create:
+    type: entity
+    class: StcAppBundle:Venue
+    permission: CREATE
+    group_name: ""
+    bindings: ~
+
+stc_venue_update:
+    type: entity
+    class: StcAppBundle:Venue
+    permission: EDIT
+    group_name: ""
+    bindings: ~
+
+stc_venue_delete:
+    type: entity
+    class: StcAppBundle:Venue
+    permission: DELETE
+    group_name: ""
+    bindings: ~

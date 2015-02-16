@@ -1,0 +1,37 @@
+oro_menu_config:
+    items:
+        band_tab:
+            label: Bands
+            uri: '#'
+            extras:
+                icon: icon-building
+                position: 2
+        venue_tab:
+            label: Venues
+            uri: '#'
+            extras:
+                icon: icon-building
+                position: 2
+        shortcut_band_item:
+            label: View Bands
+            route: stc_band_index
+        shortcut_band_create:
+            label: Create Band
+            route: stc_band_create
+        shortcut_venue_item:
+            label: View Venues
+            route: stc_venue_index
+        shortcut_venue_create:
+            label: Create Venue
+            route: stc_venue_create
+    tree:
+        application_menu:
+            children:
+                band_tab:
+                    children:
+                        shortcut_band_item: ~
+                        shortcut_band_create: ~
+                venue_tab:
+                    children:
+                        shortcut_venue_item: ~
+                        shortcut_venue_create: ~

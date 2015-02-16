@@ -1,0 +1,12 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+{% set pageTitle = 'stc.venue.entity_plural_label'|trans %}
+{% set gridName = 'stc_venue_grid' %}
+{% block navButtons %}
+    {% if resource_granted('stc_venue_create') %}
+        {{ UI.addButton({
+            'path' : path('stc_venue_create'),
+            'entity_label': 'stc.venue.entity.label'|trans
+        }) }}
+    {% endif %}
+{% endblock %}

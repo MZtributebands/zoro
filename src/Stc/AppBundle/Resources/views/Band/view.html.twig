@@ -1,0 +1,120 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as macros %}
+{% import 'OroEntityConfigBundle::macros.html.twig' as entityConfig %}
+
+{% set fullname = entity|oro_format_name|default('N/A'|trans) %}
+
+{% set audit_entity_class = 'Stc_Bundle_BandBundle_Entity_Band' %}
+
+{% block navButtons %}
+    {% if resource_granted('EDIT', entity) %}
+        {{ UI.editButton({
+            'path' : path('stc_band_update', { 'id': entity.id }),
+            'entity_label': 'stc.band.entity.class'|trans
+        }) }}
+    {% endif %}
+    {#{% if resource_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('oro_api_delete_contact', {'id': entity.id}) ,
+            'dataRedirect': path('orocrm_contact_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-contact',
+            'dataId': entity.id,
+            'entity_label': 'orocrm.contact.entity_label'|trans,
+        }) }}
+    {% endif %}#}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+    'entity': entity,
+    'indexPath': path('stc_band_index'),
+    'indexLabel': 'stc.band.entity_plural_label'|trans,
+    'entityTitle': entity.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+
+
+{% block stats %}
+    {{ parent() }}
+{% endblock stats %}
+
+{% block content_data %}
+    {% set bandInformationWidget %}
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {{ UI.renderProperty('stc.band.name.label'|trans, entity.name) }}
+            {{ UI.renderHtmlProperty('stc.band.description.label'|trans, entity.description) }}
+
+            {% set email %}
+                <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>
+            {% endset %}
+            {{ UI.renderHtmlProperty('stc.band.email.label'|trans, email) }}
+
+            {%- set owner -%}
+            {%- if entity.owner -%}
+                {% if resource_granted('oro_user_view') %}
+                    <a href="{{ path('oro_user_view', {'id': entity.owner.id}) }}">
+                        {{ entity.owner|oro_format_name|escape }}
+                    </a>
+                {% else %}
+                    {{ entity.owner|oro_format_name|escape }}
+                {% endif %}
+            {%- endif -%}
+            {%- endset -%}
+            {{ UI.renderHtmlProperty('Owner', owner) }}
+            {%- set relatedContact -%}
+            {%- if entity.relatedContact -%}
+                {% if resource_granted('orocrm_contact_view') %}
+                    <a href="{{ path('orocrm_contact_view', {'id': entity.relatedContact.id}) }}">
+                        {{ entity.relatedContact|oro_format_name|escape }}
+                    </a>
+                {% else %}
+                    {{ entity.relatedContact|oro_format_name|escape }}
+                {% endif %}
+            {%- endif -%}
+            {%- endset -%}
+            {{ UI.renderHtmlProperty('orocrm.case.caseentity.related_contact.label'|trans, relatedContact) }}
+            {{ UI.renderHtmlProperty('stc.band.acttype.label'|trans, entity.actType) }}
+            {{ UI.renderHtmlProperty('stc.band.tributeto.label'|trans, entity.tributeto) }}
+            {{ UI.renderHtmlProperty('stc.band.billingAddressStreet.label'|trans, entity.billingAddressStreet) }}
+            {{ UI.renderHtmlProperty('stc.band.billingAddressCity.label'|trans, entity.billingAddressCity) }}
+            {{ UI.renderHtmlProperty('stc.band.billingAddressState.label'|trans, entity.billingAddressState) }}
+            {{ UI.renderHtmlProperty('stc.band.billingAddressPostalcode.label'|trans, entity.billingAddressPostalcode) }}
+            {{ UI.renderHtmlProperty('stc.band.phoneOffice.label'|trans, entity.phoneOffice) }}
+            {{ UI.renderHtmlProperty('stc.band.website.label'|trans, entity.website) }}
+            {{ UI.renderHtmlProperty('stc.band.genre.label'|trans, entity.genre) }}
+            {{ UI.renderHtmlProperty('stc.band.facebook.label'|trans, entity.facebook) }}
+            {{ UI.renderHtmlProperty('stc.band.twitter.label'|trans, entity.twitter) }}
+            {{ UI.renderHtmlProperty('stc.band.googleplus.label'|trans, entity.googleplus) }}
+            {{ UI.renderHtmlProperty('stc.band.youtube.label'|trans, entity.youtube) }}
+            {{ UI.renderHtmlProperty('stc.band.vimeo.label'|trans, entity.vimeo) }}
+            {{ UI.renderHtmlProperty('stc.band.myspace.label'|trans, entity.myspace) }}
+            {{ UI.renderHtmlProperty('stc.band.reverbnation.label'|trans, entity.reverbnation) }}
+            {{ UI.renderHtmlProperty('stc.band.linkdin.label'|trans, entity.linkdin) }}
+
+
+
+            <div class="responsive-block">
+            {{ entityConfig.renderDynamicFields(entity) }}
+            </div>
+        </div>
+    </div>
+    {% endset %}
+
+    {% set dataBlocks = [
+    {
+    'title': 'General Information'|trans,
+    'class': 'active',
+    'subblocks': [
+    {'data' : [bandInformationWidget] }
+    ]
+    }
+    ] %}
+
+    {% set id = 'bandView' %}
+    {% set data = {'dataBlocks': dataBlocks} %}
+    {{ parent() }}
+{% endblock content_data %}

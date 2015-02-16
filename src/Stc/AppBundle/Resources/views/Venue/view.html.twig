@@ -1,0 +1,116 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as macros %}
+{% import 'OroEntityConfigBundle::macros.html.twig' as entityConfig %}
+
+{% set fullname = entity|oro_format_name|default('N/A'|trans) %}
+
+{% set audit_entity_class = 'Stc_Bundle_VenueBundle_Entity_Venue' %}
+
+{% block navButtons %}
+    {% if resource_granted('EDIT', entity) %}
+        {{ UI.editButton({
+            'path' : path('stc_venue_update', { 'id': entity.id }),
+            'entity_label': 'stc.venue.entity.class'|trans
+        }) }}
+    {% endif %}
+    {#{% if resource_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('oro_api_delete_contact', {'id': entity.id}) ,
+            'dataRedirect': path('orocrm_contact_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-contact',
+            'dataId': entity.id,
+            'entity_label': 'orocrm.contact.entity_label'|trans,
+        }) }}
+    {% endif %}#}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+    'entity': entity,
+    'indexPath': path('stc_venue_index'),
+    'indexLabel': 'stc.venue.entity_plural_label'|trans,
+    'entityTitle': entity.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+
+
+{% block stats %}
+    {{ parent() }}
+{% endblock stats %}
+
+{% block content_data %}
+    {% set venueInformationWidget %}
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+            {{ UI.renderProperty('stc.venue.name.label'|trans, entity.name) }}
+            {{ UI.renderHtmlProperty('stc.venue.description.label'|trans, entity.description) }}
+
+            {% set email %}
+                <a href="mailto:{{ entity.email }}">{{ entity.email }}</a>
+            {% endset %}
+            {{ UI.renderHtmlProperty('stc.band.email.label'|trans, email) }}
+            {%- set owner -%}
+            {%- if entity.owner -%}
+                {% if resource_granted('oro_user_view') %}
+                    <a href="{{ path('oro_user_view', {'id': entity.owner.id}) }}">
+                        {{ entity.owner|oro_format_name|escape }}
+                    </a>
+                {% else %}
+                    {{ entity.owner|oro_format_name|escape }}
+                {% endif %}
+            {%- endif -%}
+            {%- endset -%}
+            {{ UI.renderHtmlProperty('Owner', owner) }}
+            {%- set relatedContact -%}
+            {%- if entity.relatedContact -%}
+                {% if resource_granted('orocrm_contact_view') %}
+                    <a href="{{ path('orocrm_contact_view', {'id': entity.relatedContact.id}) }}">
+                        {{ entity.relatedContact|oro_format_name|escape }}
+                    </a>
+                {% else %}
+                    {{ entity.relatedContact|oro_format_name|escape }}
+                {% endif %}
+            {%- endif -%}
+            {%- endset -%}
+            {{ UI.renderHtmlProperty('orocrm.case.caseentity.related_contact.label'|trans, relatedContact) }}
+            {{ UI.renderHtmlProperty('stc.venue.venueType.label'|trans, entity.venueType) }}
+            {{ UI.renderHtmlProperty('stc.venue.capacity.label'|trans, entity.capacity) }}
+            {{ UI.renderHtmlProperty('stc.venue.billingAddressStreet.label'|trans, entity.billingAddressStreet) }}
+            {{ UI.renderHtmlProperty('stc.venue.billingAddressCity.label'|trans, entity.billingAddressCity) }}
+            {{ UI.renderHtmlProperty('stc.venue.billingAddressState.label'|trans, entity.billingAddressState) }}
+            {{ UI.renderHtmlProperty('stc.venue.billingAddressPostalcode.label'|trans, entity.billingAddressPostalcode) }}
+            {{ UI.renderHtmlProperty('stc.venue.phoneOffice.label'|trans, entity.phoneOffice) }}
+            {{ UI.renderHtmlProperty('stc.venue.website.label'|trans, entity.website) }}
+            {{ UI.renderHtmlProperty('stc.venue.ageLimit.label'|trans, entity.ageLimit) }}
+            {{ UI.renderHtmlProperty('stc.venue.facebook.label'|trans, entity.facebook) }}
+            {{ UI.renderHtmlProperty('stc.venue.twitter.label'|trans, entity.twitter) }}
+            {{ UI.renderHtmlProperty('stc.venue.avgTicketPrice.label'|trans, entity.avgTicketPrice) }}
+            {{ UI.renderHtmlProperty('stc.venue.annualRevenue.label'|trans, entity.annualRevenue) }}
+            {{ UI.renderHtmlProperty('stc.venue.industry.label'|trans, entity.industry) }}
+            {{ UI.renderHtmlProperty('stc.venue.tickerSymbol.label'|trans, entity.tickerSymbol) }}
+            {{ UI.renderHtmlProperty('stc.venue.employees.label'|trans, entity.employees) }}
+
+            <div class="responsive-block">
+            {{ entityConfig.renderDynamicFields(entity) }}
+            </div>
+        </div>
+    </div>
+    {% endset %}
+
+    {% set dataBlocks = [
+    {
+    'title': 'General Information'|trans,
+    'class': 'active',
+    'subblocks': [
+    {'data' : [venueInformationWidget] }
+    ]
+    }
+    ] %}
+
+    {% set id = 'venueView' %}
+    {% set data = {'dataBlocks': dataBlocks} %}
+    {{ parent() }}
+{% endblock content_data %}

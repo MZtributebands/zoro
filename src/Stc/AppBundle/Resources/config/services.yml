@@ -1,0 +1,21 @@
+parameters:
+    stc_band.entity.class: Stc\AppBundle\Entity\Band
+    stc_band.band.entity.class: Stc\AppBundle\Entity\Band
+    stc_band.form.type.band.class: Stc\AppBundle\Form\Type\BandType
+    stc_venue.entity.class: Stc\AppBundle\Entity\Venue
+    stc_venue.venue.entity.class: Stc\AppBundle\Entity\Venue
+    stc_venue.form.type.venue.class: Stc\AppBundle\Form\Type\VenueType
+
+services:
+    stc_band.form.type.band:
+            class: %stc_band.form.type.band.class%
+            arguments:
+                - %stc_band.entity.class%
+            tags:
+                - { name: form.type, alias: stc_band }
+    stc_venue.form.type.venue:
+            class: %stc_venue.form.type.venue.class%
+            arguments:
+                - %stc_venue.entity.class%
+            tags:
+                - { name: form.type, alias: stc_venue }
